@@ -1,0 +1,62 @@
+designing a program using arrays, structures, and pointers to illustrate how data can be stored and accessed efficiently.
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+struct Student 
+{
+    int id;
+    string name;
+    float DSA;
+    float DLD;
+    float OOP;
+};
+// calculate average marks
+float calculateAverage(Student* s)
+{
+    return (s->DSA + s->DLD + s->OOP) / 3.0;
+}
+// print one student record
+void printStudent(Student* s) 
+{
+    float avg = calculateAverage(s);
+    cout << s->id << "\t" << s->name;
+    // Auto-adjust tabs based on name length
+    int tabCount = 3 - (s->name.length() / 8);  
+    if (tabCount < 1) tabCount = 1;  // always at least 1 tab
+    for (int i = 0; i < tabCount; i++) cout << "\t";
+    cout << s->DSA << "\t"
+         << s->DLD << "\t"
+         << s->OOP << "\t"
+         << avg << endl;
+}
+int main() 
+{
+    const int SIZE = 2;
+    Student students[SIZE];
+    // array pointers
+    Student* ptr = students;
+    cout << "Enter details for " << SIZE << " students:" << endl;
+    for (int i = 0; i < SIZE; i++) {
+        cout << "\nStudent " << i + 1 << ":" << endl;
+        cout << "Enter Student ID: ";
+        cin >> (ptr + i)->id;
+        cout << "Enter Name: ";
+        cin >> (ptr + i)->name;
+        cout << "Enter DSA marks: ";
+        cin >> (ptr + i)->DSA;
+        cout << "Enter DLD marks: ";
+        cin >> (ptr + i)->DLD;
+        cout << "Enter OOP marks: ";
+        cin >> (ptr + i)->OOP;
+    }
+    // Print table header
+    cout << "\nStudent ID\tName\t\tDSA\tDLD\tOOP\tAverage Marks\n";
+    cout << string(70, '-') << "\n";
+    // Print all student records
+    for (int i = 0; i < SIZE; i++) {
+        printStudent(ptr + i);
+    }
+    return 0;
+}
